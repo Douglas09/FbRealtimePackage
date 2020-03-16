@@ -1,7 +1,6 @@
 object Form2: TForm2
   Left = 0
   Top = 0
-  ActiveControl = pgControle
   Caption = 'Exemplo Firebase Realtime'
   ClientHeight = 490
   ClientWidth = 750
@@ -15,7 +14,7 @@ object Form2: TForm2
   Position = poScreenCenter
   OnCreate = FormCreate
   OnPaint = FormPaint
-  OnShow = FormShow
+  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
@@ -34,23 +33,6 @@ object Form2: TForm2
     TabOrder = 0
     object tbiConsulta: TTabSheet
       Caption = 'Consulta'
-      object DBGrid1: TDBGrid
-        Left = 0
-        Top = 0
-        Width = 742
-        Height = 418
-        Align = alClient
-        DataSource = ds
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
-        TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
-        TitleFont.Style = []
-        OnDblClick = DBGrid1DblClick
-        OnTitleClick = DBGrid1TitleClick
-      end
       object pnInferior: TPanel
         Left = 0
         Top = 418
@@ -59,7 +41,7 @@ object Form2: TForm2
         Align = alBottom
         Color = clGray
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 0
         object btnExcluir: TButton
           AlignWithMargins = True
           Left = 216
@@ -175,10 +157,80 @@ object Form2: TForm2
           end
         end
       end
+      object Panel1: TPanel
+        Left = 0
+        Top = 0
+        Width = 742
+        Height = 418
+        Align = alClient
+        TabOrder = 1
+        object DBGrid1: TDBGrid
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 734
+          Height = 368
+          Align = alClient
+          DataSource = ds
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          OnDblClick = DBGrid1DblClick
+          OnTitleClick = DBGrid1TitleClick
+        end
+        object Panel5: TPanel
+          AlignWithMargins = True
+          Left = 4
+          Top = 378
+          Width = 734
+          Height = 36
+          Align = alBottom
+          BevelInner = bvSpace
+          BevelKind = bkSoft
+          TabOrder = 1
+          object Label2: TLabel
+            Left = 2
+            Top = 2
+            Width = 66
+            Height = 28
+            Align = alLeft
+            Alignment = taRightJustify
+            Caption = 'CONSULTAR'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitHeight = 13
+          end
+          object edtPesquisar: TEdit
+            AlignWithMargins = True
+            Left = 71
+            Top = 5
+            Width = 654
+            Height = 22
+            Align = alClient
+            TabOrder = 0
+            TextHint = 'fa'#231'a sua consulta...'
+            OnChange = edtPesquisarChange
+            ExplicitHeight = 21
+          end
+        end
+      end
     end
     object tbiCadastro: TTabSheet
       Caption = 'Cadastro'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 418
@@ -325,97 +377,306 @@ object Form2: TForm2
         end
       end
     end
-    object TabSheet1: TTabSheet
-      Caption = 'teste'
-      ImageIndex = 2
-      object Label2: TLabel
-        Left = 56
-        Top = 91
-        Width = 33
-        Height = 13
-        Caption = 'Coluna'
-      end
-      object Label3: TLabel
-        Left = 56
-        Top = 118
-        Width = 24
-        Height = 13
-        Caption = 'Valor'
-      end
-      object memRes: TMemo
-        Left = 0
-        Top = 248
-        Width = 742
-        Height = 214
-        Align = alBottom
-        Lines.Strings = (
-          'memRes')
-        TabOrder = 2
-      end
-      object btnEqual: TButton
-        Left = 25
-        Top = 160
-        Width = 75
-        Height = 25
-        Caption = 'EQUAL_TO'
-        TabOrder = 3
-        OnClick = btnEqualClick
-      end
-      object edtValor: TEdit
-        Left = 105
-        Top = 115
-        Width = 121
-        Height = 21
-        TabOrder = 1
-      end
-      object edtColuna: TEdit
-        Left = 105
-        Top = 88
-        Width = 121
-        Height = 21
+  end
+  object pnAutent: TPanel
+    Left = 695
+    Top = 46
+    Width = 719
+    Height = 394
+    TabOrder = 1
+    Visible = False
+    object pnAutenticacao: TPanel
+      Left = 178
+      Top = 40
+      Width = 397
+      Height = 321
+      Color = clGray
+      ParentBackground = False
+      TabOrder = 0
+      object Panel4: TPanel
+        AlignWithMargins = True
+        Left = 4
+        Top = 4
+        Width = 389
+        Height = 58
+        Align = alTop
+        Color = clWhite
+        ParentBackground = False
         TabOrder = 0
+        object Label4: TLabel
+          Left = 4
+          Top = 4
+          Width = 115
+          Height = 13
+          Caption = 'Autentica'#231#227'o de Acesso'
+        end
+        object btnLoginAnonimo: TButton
+          Left = 4
+          Top = 23
+          Width = 93
+          Height = 29
+          Caption = 'An'#244'nima'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          OnClick = btnLoginAnonimoClick
+        end
+        object btnLoginEmail: TButton
+          Left = 99
+          Top = 23
+          Width = 93
+          Height = 29
+          Caption = 'Email e Senha'
+          TabOrder = 1
+          OnClick = btnLoginEmailClick
+        end
+        object btnLoginChaveSecreta: TButton
+          Left = 194
+          Top = 23
+          Width = 93
+          Height = 29
+          Caption = 'Chave Secreta'
+          TabOrder = 2
+          OnClick = btnLoginChaveSecretaClick
+        end
+        object btnLoginSmartPhone: TButton
+          Left = 289
+          Top = 23
+          Width = 93
+          Height = 29
+          Caption = 'SmartPhone'
+          Enabled = False
+          TabOrder = 3
+        end
       end
-      object btnStart: TButton
-        Left = 101
-        Top = 160
-        Width = 75
-        Height = 25
-        Caption = 'START_AT'
-        TabOrder = 4
-        OnClick = btnStartClick
+      object pnAnonimo: TPanel
+        Left = 1
+        Top = 65
+        Width = 395
+        Height = 255
+        Align = alClient
+        Color = clSilver
+        ParentBackground = False
+        TabOrder = 1
+        object Label5: TLabel
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 387
+          Height = 16
+          Align = alTop
+          Caption = 'Api Key'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 49
+        end
+        object memAnonimoApiKey: TMemo
+          AlignWithMargins = True
+          Left = 4
+          Top = 26
+          Width = 387
+          Height = 184
+          Align = alClient
+          TabOrder = 0
+        end
+        object Button2: TButton
+          AlignWithMargins = True
+          Left = 4
+          Top = 216
+          Width = 387
+          Height = 35
+          Align = alBottom
+          Caption = 'Autentica'#231#227'o An'#244'nima'
+          TabOrder = 1
+          OnClick = Button2Click
+        end
       end
-      object btnEnd: TButton
-        Left = 177
-        Top = 160
-        Width = 75
-        Height = 25
-        Caption = 'END_AT'
-        TabOrder = 5
-        OnClick = btnEndClick
+      object pnChaveSecreta: TPanel
+        Left = 1
+        Top = 65
+        Width = 395
+        Height = 255
+        Align = alClient
+        Color = clSilver
+        ParentBackground = False
+        TabOrder = 3
+        Visible = False
+        object Label9: TLabel
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 387
+          Height = 16
+          Align = alTop
+          Caption = 'Token'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 38
+        end
+        object memSecreto: TMemo
+          AlignWithMargins = True
+          Left = 4
+          Top = 26
+          Width = 387
+          Height = 184
+          Align = alClient
+          TabOrder = 0
+        end
+        object Button6: TButton
+          AlignWithMargins = True
+          Left = 4
+          Top = 216
+          Width = 387
+          Height = 35
+          Align = alBottom
+          Caption = 'Autenticar'
+          TabOrder = 1
+          OnClick = Button6Click
+        end
       end
-      object Button1: TButton
-        Left = 401
-        Top = 160
-        Width = 121
-        Height = 25
-        Caption = 'SEND RECAPTCHA'
-        TabOrder = 6
-        OnClick = Button1Click
-      end
-      object Edit1: TEdit
-        Left = 401
-        Top = 133
-        Width = 121
-        Height = 21
-        TabOrder = 7
-        Text = '+5551995502636'
+      object pnEmailSenha: TPanel
+        Left = 1
+        Top = 65
+        Width = 395
+        Height = 255
+        Align = alClient
+        Color = clSilver
+        ParentBackground = False
+        TabOrder = 2
+        Visible = False
+        DesignSize = (
+          395
+          255)
+        object Label6: TLabel
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 387
+          Height = 16
+          Align = alTop
+          Caption = 'Api Key'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 49
+        end
+        object Label7: TLabel
+          AlignWithMargins = True
+          Left = 4
+          Top = 82
+          Width = 387
+          Height = 16
+          Align = alTop
+          Caption = 'Email'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 32
+        end
+        object Label8: TLabel
+          AlignWithMargins = True
+          Left = 4
+          Top = 128
+          Width = 387
+          Height = 16
+          Align = alTop
+          Caption = 'Senha'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 40
+        end
+        object memEmailSenhaApiKey: TMemo
+          AlignWithMargins = True
+          Left = 4
+          Top = 26
+          Width = 387
+          Height = 50
+          Align = alTop
+          TabOrder = 0
+        end
+        object Button3: TButton
+          AlignWithMargins = True
+          Left = 4
+          Top = 216
+          Width = 110
+          Height = 35
+          Caption = 'Resetar Senha'
+          TabOrder = 1
+          OnClick = Button3Click
+        end
+        object edtEmailSenhaEmail: TEdit
+          AlignWithMargins = True
+          Left = 4
+          Top = 101
+          Width = 387
+          Height = 21
+          Margins.Top = 0
+          Align = alTop
+          TabOrder = 2
+          TextHint = 'Informe seu e-mail aqui'
+        end
+        object edtEmailSenhaSenha: TEdit
+          AlignWithMargins = True
+          Left = 4
+          Top = 147
+          Width = 387
+          Height = 21
+          Margins.Top = 0
+          Align = alTop
+          TabOrder = 3
+          TextHint = '**********'
+        end
+        object Button4: TButton
+          AlignWithMargins = True
+          Left = 120
+          Top = 216
+          Width = 154
+          Height = 35
+          Anchors = [akLeft, akRight, akBottom]
+          Caption = 'Logar e Continuar'
+          TabOrder = 4
+          OnClick = Button4Click
+        end
+        object Button5: TButton
+          AlignWithMargins = True
+          Left = 280
+          Top = 216
+          Width = 110
+          Height = 35
+          Anchors = [akTop, akRight]
+          Caption = 'Cadastrar Email'
+          TabOrder = 5
+          OnClick = Button5Click
+        end
       end
     end
   end
   object ds: TDataSource
     DataSet = memContatos
-    Left = 404
-    Top = 72
+    Left = 188
+    Top = 40
   end
   object memContatos: TFDMemTable
     FieldDefs = <>
@@ -428,8 +689,8 @@ object Form2: TForm2
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 348
-    Top = 80
+    Left = 132
+    Top = 40
     object memContatosCODIGO: TIntegerField
       DisplayWidth = 10
       FieldName = 'CODIGO'
@@ -454,12 +715,5 @@ object Form2: TForm2
       FieldName = 'DATA_CADASTRO'
       Size = 30
     end
-  end
-  object rt: TFBRealTime
-    CaseSensitive = False
-    OnGetData.MemTable = memContatos
-    onErrorOccurred = rtErrorOccurred
-    Left = 284
-    Top = 144
   end
 end

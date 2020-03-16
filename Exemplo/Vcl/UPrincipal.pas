@@ -13,29 +13,22 @@ uses
 
 type
   TForm2 = class(TForm)
+    Image1: TImage;
     pgControle: TPageControl;
     tbiConsulta: TTabSheet;
-    tbiCadastro: TTabSheet;
-    ds: TDataSource;
     DBGrid1: TDBGrid;
     pnInferior: TPanel;
     btnExcluir: TButton;
     btnIncluir: TButton;
+    btnBackup: TButton;
+    btnLote: TButton;
+    Panel3: TPanel;
+    Label1: TLabel;
+    edtTabela: TEdit;
+    tbiCadastro: TTabSheet;
     Panel2: TPanel;
     btnCancelar: TButton;
     btnGravar: TButton;
-    btnBackup: TButton;
-    btnLote: TButton;
-    Image1: TImage;
-    memContatos: TFDMemTable;
-    memContatosCODIGO: TIntegerField;
-    memContatosNOME: TStringField;
-    memContatosEMAIL: TStringField;
-    memContatosTELEFONE: TStringField;
-    memContatosDATA_CADASTRO: TStringField;
-    Panel3: TPanel;
-    edtTabela: TEdit;
-    Label1: TLabel;
     pnFundo: TPanel;
     StaticText1: TStaticText;
     StaticText2: TStaticText;
@@ -43,20 +36,44 @@ type
     edtNome: TEdit;
     edtEmail: TEdit;
     edtTelefone: TEdit;
-    TabSheet1: TTabSheet;
-    memRes: TMemo;
-    btnEqual: TButton;
-    rt: TFBRealTime;
-    edtValor: TEdit;
-    edtColuna: TEdit;
+    ds: TDataSource;
+    memContatos: TFDMemTable;
+    memContatosCODIGO: TIntegerField;
+    memContatosNOME: TStringField;
+    memContatosEMAIL: TStringField;
+    memContatosTELEFONE: TStringField;
+    memContatosDATA_CADASTRO: TStringField;
+    pnAutent: TPanel;
+    pnAutenticacao: TPanel;
+    Panel4: TPanel;
+    Label4: TLabel;
+    btnLoginAnonimo: TButton;
+    btnLoginEmail: TButton;
+    btnLoginChaveSecreta: TButton;
+    btnLoginSmartPhone: TButton;
+    pnAnonimo: TPanel;
+    Label5: TLabel;
+    memAnonimoApiKey: TMemo;
+    Button2: TButton;
+    pnEmailSenha: TPanel;
+    Label6: TLabel;
+    memEmailSenhaApiKey: TMemo;
+    Button3: TButton;
+    Label7: TLabel;
+    edtEmailSenhaEmail: TEdit;
+    edtEmailSenhaSenha: TEdit;
+    Label8: TLabel;
+    Button4: TButton;
+    Button5: TButton;
+    pnChaveSecreta: TPanel;
+    Label9: TLabel;
+    memSecreto: TMemo;
+    Button6: TButton;
+    Panel1: TPanel;
+    Panel5: TPanel;
     Label2: TLabel;
-    Label3: TLabel;
-    btnStart: TButton;
-    btnEnd: TButton;
-    Button1: TButton;
-    Edit1: TEdit;
+    edtPesquisar: TEdit;
     procedure FormCreate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnIncluirClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
@@ -67,19 +84,27 @@ type
     procedure DBGrid1TitleClick(Column: TColumn);
     procedure edtTabelaExit(Sender: TObject);
     procedure FormPaint(Sender: TObject);
-    procedure btnEqualClick(Sender: TObject);
-    procedure rtErrorOccurred(Sender: TComponent; Codigo: Integer;
-      Erro: string);
-    procedure btnStartClick(Sender: TObject);
-    procedure btnEndClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure rtErrorOccurred(Sender: TComponent; Codigo: Integer; Erro: string);
+    procedure FormResize(Sender: TObject);
+    procedure btnLoginAnonimoClick(Sender: TObject);
+    procedure btnLoginEmailClick(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure btnLoginChaveSecretaClick(Sender: TObject);
+    procedure edtPesquisarChange(Sender: TObject);
   private
     FCodigo : String;
     procedure listar;
     procedure cadastroLimpar;
   public
     { Public declarations }
+    rt : TFBRealTime;
     procedure posicionarEdicao;
+
+    procedure abrirPrograma;
   end;
 
 var
@@ -88,6 +113,13 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm2.abrirPrograma;
+begin
+  pnAutent.Visible      := false;
+  pgControle.ActivePage := tbiConsulta;
+  listar;
+end;
 
 procedure TForm2.btnBackupClick(Sender: TObject);
 Var arquivo : String;
@@ -169,6 +201,42 @@ begin
   edtNome.SetFocus;
 end;
 
+procedure TForm2.btnLoginAnonimoClick(Sender: TObject);
+begin
+  btnLoginAnonimo.Font.Style := [fsBold];
+  btnLoginEmail.Font.Style := [];
+  btnLoginChaveSecreta.Font.Style := [];
+  btnLoginSmartPhone.Font.Style := [];
+
+  pnAnonimo.Visible    := true;
+  pnEmailSenha.Visible := false;
+  pnChaveSecreta.Visible := false;
+end;
+
+procedure TForm2.btnLoginChaveSecretaClick(Sender: TObject);
+begin
+  btnLoginChaveSecreta.Font.Style := [fsBold];
+  btnLoginEmail.Font.Style := [];
+  btnLoginAnonimo.Font.Style := [];
+  btnLoginSmartPhone.Font.Style := [];
+
+  pnChaveSecreta.Visible := true;
+  pnEmailSenha.Visible := false;
+  pnAnonimo.Visible    := false;
+end;
+
+procedure TForm2.btnLoginEmailClick(Sender: TObject);
+begin
+  btnLoginEmail.Font.Style := [fsBold];
+  btnLoginAnonimo.Font.Style := [];
+  btnLoginChaveSecreta.Font.Style := [];
+  btnLoginSmartPhone.Font.Style := [];
+
+  pnEmailSenha.Visible := true;
+  pnAnonimo.Visible    := false;
+  pnChaveSecreta.Visible := false;
+end;
+
 procedure TForm2.btnLoteClick(Sender: TObject);
 Var int : Integer;
 begin
@@ -195,38 +263,72 @@ begin
   listar;
 end;
 
-procedure TForm2.btnStartClick(Sender: TObject);
-Var filtro : TFBFilter;
+procedure TForm2.Button2Click(Sender: TObject);
+Var resultado : String;
 begin
-  filtro := TFBFilter.Create(self);
-  filtro.Where( edtColuna.Text ).StartAt( edtValor.Text );
+  rt.Authentication.Anonymous.ApiKey := memAnonimoApiKey.Lines.Text;
 
-  memRes.Lines.Clear;
-  memRes.Lines.Add( rt.Collection('CONTATOS').Get(filtro).ToJson );
+  resultado := rt.Authentication.Anonymous.CreateAnonymousUser.toJsonString;
+  if (resultado.Contains('idToken')) then
+  begin
+     showMessage('Autenticação realizada com sucesso.'+ sLineBreak + resultado);
+     abrirPrograma;
+  end else
+     showMessage('Autenticação negada.'+ sLineBreak + resultado);
 end;
 
-procedure TForm2.Button1Click(Sender: TObject);
+procedure TForm2.Button3Click(Sender: TObject);
 begin
-  rt.Authentication.Smartphone.ApiKey := 'AIzaSyBGYBGGge9yRqXILP-vCh6_GPaXykp5CzU';
+  rt.Authentication.EmailPassword.ApiKey   := memEmailSenhaApiKey.Lines.Text;
+  rt.Authentication.EmailPassword.Email    := edtEmailSenhaEmail.Text;
+  rt.Authentication.EmailPassword.Password := edtEmailSenhaSenha.Text;
+
+  showMessage('Resultado: '+ sLineBreak+
+              rt.Authentication.EmailPassword.SendResetPassword(rt.Authentication.EmailPassword.Email).toJsonString );
 end;
 
-procedure TForm2.btnEndClick(Sender: TObject);
-Var filtro : TFBFilter;
+procedure TForm2.Button4Click(Sender: TObject);
+Var resultado : String;
 begin
-  filtro := TFBFilter.Create(self);
-  filtro.Where( edtColuna.Text ).EndAt( edtValor.Text );
+  rt.Authentication.EmailPassword.ApiKey   := memEmailSenhaApiKey.Lines.Text;
+  rt.Authentication.EmailPassword.Email    := edtEmailSenhaEmail.Text;
+  rt.Authentication.EmailPassword.Password := edtEmailSenhaSenha.Text;
 
-  memRes.Lines.Clear;
-  memRes.Lines.Add( rt.Collection('CONTATOS').Get(filtro).ToJson );
+  resultado := rt.Authentication.EmailPassword.LoginWithEmailAndPassword(rt.Authentication.EmailPassword.Email,
+                                                                         rt.Authentication.EmailPassword.Password).toJsonString;
+  if (resultado.Contains('idToken')) then
+  begin
+     showMessage('Autenticação realizada com sucesso!'+ sLineBreak + resultado);
+     abrirPrograma;
+  end else
+     raise Exception.Create('Erro na autenticação:'+ sLineBreak+ resultado);
 end;
 
-procedure TForm2.btnEqualClick(Sender: TObject);
-Var filtro : TFBFilter;
+procedure TForm2.Button5Click(Sender: TObject);
 begin
-  filtro := TFBFilter.Create(self).Where( edtColuna.Text ).EqualTo( edtValor.Text );
-  
-  memRes.Lines.Clear;
-  memRes.Lines.Add( rt.Collection('CONTATOS').Get(filtro).ToJson );
+  rt.Authentication.EmailPassword.ApiKey   := memEmailSenhaApiKey.Lines.Text;
+  rt.Authentication.EmailPassword.Email    := edtEmailSenhaEmail.Text;
+  rt.Authentication.EmailPassword.Password := edtEmailSenhaSenha.Text;
+
+
+
+  showMessage('Resultado: '+ sLineBreak+
+               rt.Authentication.EmailPassword.CreateUserWithEmailAndPassword(rt.Authentication.EmailPassword.Email,
+                                                                              rt.Authentication.EmailPassword.Password)
+               .toJsonString
+              );
+end;
+
+procedure TForm2.Button6Click(Sender: TObject);
+begin
+  rt.Authentication.SecretKey.Token := memSecreto.Lines.Text;
+
+  if (trim(memSecreto.Lines.Text) <> '') then
+  begin
+     showMessage('Este tipo de autenticação só é validada no momento do consumo de dados do banco de dados.');
+     abrirPrograma;
+  end else
+     raise Exception.Create('Nenhum token informado.');
 end;
 
 procedure TForm2.cadastroLimpar;
@@ -243,7 +345,7 @@ begin
   if not (memContatos.IsEmpty) then
   begin
      Try
-//         CAREGAR CONTATOS DO FIREBASE
+//       CAREGAR CONTATOS DO FIREBASE
          rtr := rt.Collection( edtTabela.Text ).Key( memContatosCODIGO.AsString ).Get;
          if (rt.LoadItemsWithJson( rtr.toJson )) then
          begin
@@ -271,6 +373,27 @@ begin
   memContatos.IndexFieldNames := Column.Field.FieldName;
 end;
 
+procedure TForm2.edtPesquisarChange(Sender: TObject);
+begin
+  if (Trim(edtPesquisar.Text) <> '') then
+  begin
+     memContatos.Filter   := '';
+     Try
+       strToInt( edtPesquisar.Text );
+       memContatos.Filter   := 'CODIGO = '+ quotedStr(edtPesquisar.Text);
+     Except End;
+
+     if (trim(memContatos.Filter) <> '') then
+        memContatos.Filter := memContatos.Filter + ' OR NOME LIKE ''%'+ edtPesquisar.Text + '%'''
+     else
+        memContatos.Filter := memContatos.Filter + 'NOME LIKE ''%'+ edtPesquisar.Text + '%''';
+     memContatos.Filter := memContatos.Filter + ' OR TELEFONE LIKE ''%'+ edtPesquisar.Text + '%''';
+
+     memContatos.Filtered := true;
+  end else
+     memContatos.Filtered := false;
+end;
+
 procedure TForm2.edtTabelaExit(Sender: TObject);
 begin
   listar;
@@ -280,6 +403,12 @@ procedure TForm2.FormCreate(Sender: TObject);
 begin
   memContatos.Active := true;
   memContatos.EmptyDataSet;
+
+  rt                     := TFBRealTime.Create(self);
+  rt.ProjectCode         := 'exemplofbrealtime';
+  rt.OnGetData.MemTable  := memContatos;
+  rt.onErrorOccurred     := rtErrorOccurred;
+  pnAutent.Visible       := true;
 end;
 
 procedure TForm2.FormPaint(Sender: TObject);
@@ -287,10 +416,15 @@ begin
   posicionarEdicao;
 end;
 
-procedure TForm2.FormShow(Sender: TObject);
+procedure TForm2.FormResize(Sender: TObject);
 begin
-  pgControle.ActivePage := tbiConsulta;
-  listar;
+  pnAutent.Left   := 0;
+  pnAutent.Top    := 0;
+  pnAutent.Width  := Self.ClientWidth;
+  pnAutent.Height := Self.ClientHeight;
+
+  pnAutenticacao.Left    := Trunc((Self.ClientWidth / 2) - (pnAutenticacao.Width / 2));
+  pnAutenticacao.Top     := Trunc((Self.ClientHeight / 2) - (pnAutenticacao.Height / 2));
 end;
 
 procedure TForm2.listar;
