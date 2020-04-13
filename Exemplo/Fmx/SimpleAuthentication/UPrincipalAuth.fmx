@@ -1,0 +1,619 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 633
+  ClientWidth = 417
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object TabControl1: TTabControl
+    Align = Client
+    Margins.Left = 3.000000000000000000
+    Margins.Top = 3.000000000000000000
+    Margins.Right = 3.000000000000000000
+    Margins.Bottom = 3.000000000000000000
+    Size.Width = 411.000000000000000000
+    Size.Height = 410.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 1
+    TabPosition = PlatformDefault
+    Sizes = (
+      411s
+      361s
+      411s
+      361s
+      411s
+      361s
+      411s
+      361s)
+    object TabItem1: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 77.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'AN'#212'NIMA'
+      ExplicitSize.cx = 102.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object Text1: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 10.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 10.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'API KEY'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object mAnApiKey: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Lines.Strings = (
+          'AIzaSyBGYBGGge9yRqXILP-vCh6_GPaXykp5CzU')
+        Align = Top
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 50.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Viewport.Width = 399.000000000000000000
+        Viewport.Height = 36.000000000000000000
+      end
+      object Button1: TButton
+        Align = Bottom
+        Margins.Left = 25.000000000000000000
+        Margins.Top = 25.000000000000000000
+        Margins.Right = 25.000000000000000000
+        Margins.Bottom = 25.000000000000000000
+        Position.X = 25.000000000000000000
+        Position.Y = 296.000000000000000000
+        Size.Width = 361.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'EFETUAR AUTENTICA'#199#195'O'
+        OnClick = ButtonClick
+      end
+    end
+    object TabItem2: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 104.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'EMAIL E SENHA'
+      ExplicitSize.cx = 102.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object mEsApiKey: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Lines.Strings = (
+          'AIzaSyBGYBGGge9yRqXILP-vCh6_GPaXykp5CzU')
+        Align = Top
+        Margins.Left = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 34.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Viewport.Width = 399.000000000000000000
+        Viewport.Height = 36.000000000000000000
+      end
+      object Text3: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'API KEY'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object Text4: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 78.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'EMAIL'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object mEsEmail: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 4
+        Text = 'douglascolombo09@gmail.com'
+        Position.X = 4.000000000000000000
+        Position.Y = 108.000000000000000000
+        Margins.Left = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object mEsSenha: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 3
+        Text = '12345'
+        Position.X = 4.000000000000000000
+        Position.Y = 174.000000000000000000
+        Margins.Left = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Text5: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 144.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'SENHA'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object Rectangle2: TRectangle
+        Align = Bottom
+        Fill.Color = claWhite
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 307.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        object Button2: TButton
+          Align = Left
+          StyledSettings = [Family, Style, FontColor]
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 2.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 111.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'RESETAR SENHA'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.WordWrap = True
+          OnClick = Button2Click
+        end
+        object Button3: TButton
+          Align = Right
+          StyledSettings = [Family, Style, FontColor]
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 290.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 111.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'CADASTRAR EMAIL'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.WordWrap = True
+          OnClick = Button3Click
+        end
+        object Button4: TButton
+          Align = Center
+          StyledSettings = [Family, Style, FontColor]
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 111.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'LOGAR'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.WordWrap = True
+          OnClick = Button4Click
+        end
+      end
+    end
+    object TabItem3: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 108.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'CHAVE SECRETA'
+      ExplicitSize.cx = 102.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object mCsToken: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Lines.Strings = (
+          'jIfsJT12pfcYZRhqnY76K06egSNkvZosIrLSIIp9')
+        Align = Top
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 50.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Viewport.Width = 399.000000000000000000
+        Viewport.Height = 36.000000000000000000
+      end
+      object Text6: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 10.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 10.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Chave Secreta / Token'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object Button5: TButton
+        Align = Bottom
+        Margins.Left = 25.000000000000000000
+        Margins.Top = 25.000000000000000000
+        Margins.Right = 25.000000000000000000
+        Margins.Bottom = 25.000000000000000000
+        Position.X = 25.000000000000000000
+        Position.Y = 296.000000000000000000
+        Size.Width = 361.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'EFETUAR AUTENTICA'#199#195'O'
+        OnClick = Button5Click
+      end
+    end
+    object TabItem4: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 98.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'SMARTPHONE'
+      ExplicitSize.cx = 103.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object Text7: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'API KEY'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object mSApiKey: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Lines.Strings = (
+          'AIzaSyBGYBGGge9yRqXILP-vCh6_GPaXykp5CzU')
+        Align = Top
+        Margins.Left = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 28.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Viewport.Width = 399.000000000000000000
+        Viewport.Height = 36.000000000000000000
+      end
+      object mSNumero: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 6
+        Text = '+55 51 99550-2636'
+        Position.X = 4.000000000000000000
+        Position.Y = 96.000000000000000000
+        Margins.Left = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Text8: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'N'#218'MERO DE TELEFONE'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object mSCodigoVerificacao: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 5
+        Text = '998877'
+        Position.X = 4.000000000000000000
+        Position.Y = 156.000000000000000000
+        Margins.Left = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Text9: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 132.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'C'#211'DIGO DE VERIFICA'#199#195'O'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object Rectangle3: TRectangle
+        Align = Bottom
+        Fill.Color = claWhite
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 307.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        object Button6: TButton
+          Align = Left
+          StyledSettings = [Family, Style, FontColor]
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 2.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 111.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'getRecaptchaParam'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.WordWrap = True
+          OnClick = Button6Click
+        end
+        object Button7: TButton
+          Align = Right
+          StyledSettings = [Family, Style, FontColor]
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 290.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 111.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'verifyRecaptchaCode'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.WordWrap = True
+          OnClick = Button7Click
+        end
+        object Button8: TButton
+          Align = Center
+          StyledSettings = [Family, Style, FontColor]
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 111.000000000000000000
+          Size.Height = 46.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'SendRecaptchaCode'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.WordWrap = True
+          OnClick = Button8Click
+        end
+      end
+      object Text10: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 192.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'RECAPTCHA TOKEN'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+      object mSRecaptcha: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 4
+        Position.X = 4.000000000000000000
+        Position.Y = 216.000000000000000000
+        Enabled = False
+        Margins.Left = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object mSSession: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 3
+        Position.X = 4.000000000000000000
+        Position.Y = 276.000000000000000000
+        Enabled = False
+        Margins.Left = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Size.Width = 403.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Text11: TText
+        Align = Top
+        Margins.Left = 2.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 2.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 2.000000000000000000
+        Position.Y = 252.000000000000000000
+        Size.Width = 407.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'SESSION INFO'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+    end
+  end
+  object Rectangle1: TRectangle
+    Align = Bottom
+    Margins.Left = 3.000000000000000000
+    Margins.Top = 3.000000000000000000
+    Margins.Right = 3.000000000000000000
+    Margins.Bottom = 3.000000000000000000
+    Position.X = 3.000000000000000000
+    Position.Y = 480.000000000000000000
+    Size.Width = 411.000000000000000000
+    Size.Height = 150.000000000000000000
+    Size.PlatformDefault = False
+    object memAut: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      StyledSettings = [Family, Style, FontColor]
+      TextSettings.Font.Size = 10.000000000000000000
+      Align = Client
+      Margins.Left = 2.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Size.Width = 407.000000000000000000
+      Size.Height = 122.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Viewport.Width = 403.000000000000000000
+      Viewport.Height = 118.000000000000000000
+    end
+    object Text2: TText
+      Align = Top
+      Size.Width = 411.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'LOG DE AUTENTICA'#199#195'O'
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+    end
+  end
+  object eProjectCode: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = MostTop
+    TabOrder = 3
+    Text = 'exemplofbrealtime'
+    Position.X = 4.000000000000000000
+    Position.Y = 27.000000000000000000
+    Margins.Left = 4.000000000000000000
+    Margins.Top = 2.000000000000000000
+    Margins.Right = 4.000000000000000000
+    Margins.Bottom = 2.000000000000000000
+    Size.Width = 409.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Text12: TText
+    Align = MostTop
+    Size.Width = 417.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'C'#211'DIGO/NOME DO PROJETO'
+    TextSettings.Font.Size = 18.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+  end
+  object FBRealTime1: TFBRealTime
+    CaseSensitive = False
+    onErrorOccurred = FBRealTime1ErrorOccurred
+    LicenseValidation.Document = '99887766554433221100'
+    LicenseValidation.Responsible = 'DOUGLAS COLOMBO'
+    AfterAuthenticating = FBRealTime1AfterAuthenticating
+    Left = 87
+    Top = 344
+  end
+end
