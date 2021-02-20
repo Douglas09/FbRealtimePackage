@@ -38,7 +38,6 @@ type
     edtTelefone: TEdit;
     ds: TDataSource;
     memContatos: TFDMemTable;
-    memContatosCODIGO: TIntegerField;
     memContatosNOME: TStringField;
     memContatosEMAIL: TStringField;
     memContatosTELEFONE: TStringField;
@@ -73,6 +72,7 @@ type
     Panel5: TPanel;
     Label2: TLabel;
     edtPesquisar: TEdit;
+    memContatosCODIGO: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure btnIncluirClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
@@ -99,6 +99,7 @@ type
     FCodigo : String;
     procedure listar;
     procedure cadastroLimpar;
+    function FormatNumber(pNumber, pSize : String) : String;
   public
     { Public declarations }
     rt : TFBRealTime;
@@ -149,8 +150,6 @@ end;
 
 procedure TForm2.btnGravarClick(Sender: TObject);
 Var novoRegistro : Boolean;
-
-  rtr : TFBRealTimeResponse;
 begin
   if (edtNome.Text = '') then
   begin
@@ -172,7 +171,7 @@ begin
 
   if (FCodigo = '-1') then //INSERINDO NOVO REGISTRO
   begin
-     FCodigo      := IntToStr(strToInt(rt.Collection( edtTabela.Text ).getLastRecord('CODIGO')) + 1);
+     FCodigo      := rt.Collection( edtTabela.Text ).getNextRecord('CODIGO');
      novoRegistro := true;
   end else
      novoRegistro := false;
@@ -241,19 +240,20 @@ procedure TForm2.btnLoteClick(Sender: TObject);
 Var int : Integer;
 begin
   rt.Collection( edtTabela.Text );
-  FCodigo      := IntToStr(strToInt(rt.Collection( edtTabela.Text ).getLastRecord('CODIGO')));
+  FCodigo      := rt.Collection( edtTabela.Text ).getNextRecord('CODIGO');
   rt.Batch_StartInsertion;
   Try
     for int := 0 to 15 do
     begin
-        FCodigo := intToStr(strToInt(FCodigo) + 1);
-        rt.Key( FCodigo )
-          .Field('CODIGO', FCodigo)
-          .Field('NOME',     'Teste_'+ intToStr(int))
-          .Field('TELEFONE', '(51)99550263'+ intToStr(int))
-          .Field('EMAIL',    'teste_'+intToStr(int)+'@gmail.com')
-          .Field('DATA_CADASTRO', dateTimeToStr(now))
+      rt.Key( FCodigo )
+        .Field('CODIGO', FCodigo)
+        .Field('NOME',     'Teste_'+ intToStr(int))
+        .Field('TELEFONE', '(51)99550263'+ intToStr(int))
+        .Field('EMAIL',    'teste_'+intToStr(int)+'@gmail.com')
+        .Field('DATA_CADASTRO', dateTimeToStr(now))
         .Batch_AddRegistration;
+
+      FCodigo := FormatNumber(intToStr(strToInt(FCodigo) + 1), '10');
     end;
     rt.Batch_FinishInsertion;
   Finally
@@ -342,30 +342,28 @@ end;
 procedure TForm2.DBGrid1DblClick(Sender: TObject);
 Var rtr : TFBRealTimeResponse;
 begin
-  if not (memContatos.IsEmpty) then
-  begin
-     Try
-//       CAREGAR CONTATOS DO FIREBASE
-         rtr := rt.Collection( edtTabela.Text ).Key( memContatosCODIGO.AsString ).Get;
-         if (rt.LoadItemsWithJson( rtr.toJson )) then
-         begin
-            cadastroLimpar;
+  if (memContatos.IsEmpty) then
+    exit;
 
-            FCodigo               := memContatosCODIGO.AsString;
-            edtNome.Text          := rt.Items.getField('NOME');
-            edtEmail.Text         := rt.Items.getField('EMAIL');
-            edtTelefone.Text      := rt.Items.getField('TELEFONE');
-            posicionarEdicao;
-            pgControle.ActivePage := tbiCadastro;
-         end;
-     Finally
-         if (Assigned(rtr)) then
-         begin
-            rtr.Destroy;
-            rtr := nil;
-         end;
-     End;
-  end;
+  rtr := nil;
+  Try
+//  CAREGAR CONTATOS DO FIREBASE
+    rtr := rt.Collection( edtTabela.Text ).Key( memContatosCODIGO.AsString ).Get;
+    if (rt.LoadItemsWithJson( rtr.toJson )) then
+    begin
+      cadastroLimpar;
+
+      FCodigo               := memContatosCODIGO.AsString;
+      edtNome.Text          := rt.Items.getField('NOME');
+      edtEmail.Text         := rt.Items.getField('EMAIL');
+      edtTelefone.Text      := rt.Items.getField('TELEFONE');
+      posicionarEdicao;
+      pgControle.ActivePage := tbiCadastro;
+    end;
+  Finally
+    if (Assigned(rtr)) then
+      rtr.Destroy;
+  End;
 end;
 
 procedure TForm2.DBGrid1TitleClick(Column: TColumn);
@@ -399,6 +397,13 @@ begin
   listar;
 end;
 
+function TForm2.FormatNumber(pNumber, pSize: String): String;
+begin
+  result := pNumber;
+  while (length(result) < pSize.ToInteger) do
+    result := '0' + result;
+end;
+
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   memContatos.Active := true;
@@ -429,9 +434,9 @@ end;
 
 procedure TForm2.listar;
 begin
-   rt.Collection( edtTabela.Text ).Key('').Get;
-   if not (pgControle.ActivePage = tbiConsulta) then
-      pgControle.ActivePage := tbiConsulta;
+  rt.Collection( edtTabela.Text ).Key('').Get;
+  if not (pgControle.ActivePage = tbiConsulta) then
+    pgControle.ActivePage := tbiConsulta;
 end;
 
 procedure TForm2.posicionarEdicao;

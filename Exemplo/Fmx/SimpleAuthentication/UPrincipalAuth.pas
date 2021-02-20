@@ -170,7 +170,6 @@ begin
 
   //COM O RETORNO DA REQUISIÇÃO É CRIADO UM JSON E CAPTURADO A PROPRIEDADE "recaptchaStoken"
   Try
-     objResultado     := TJSONObject.Create;
      objResultado     := (TJSONObject.ParseJSONValue( res ) as TJSONObject);
      mSRecaptcha.Text := objResultado.Get('recaptchaStoken').JsonValue.Value;
   Finally
@@ -208,16 +207,15 @@ begin
   resultadoStr := FBRealTime1.Authentication.Smartphone.sendRecaptchaCode(FBRealTime1.Authentication.Smartphone.Number, mSRecaptcha.Text).toJsonString;
 
   Try
-     Try
-       objResultado     := TJSONObject.Create;
-       objResultado     := (TJSONObject.ParseJSONValue( resultadoStr ) as TJSONObject);
-       mSSession.text   := objResultado.Get('sessionInfo').JsonValue.Value;
-       memAut.Lines.Add('SessionInfo: '+ mSSession.text);
-     Except
-       showMessage( resultadoStr );
-     End;
+    Try
+      objResultado     := (TJSONObject.ParseJSONValue( resultadoStr ) as TJSONObject);
+      mSSession.text   := objResultado.Get('sessionInfo').JsonValue.Value;
+      memAut.Lines.Add('SessionInfo: '+ mSSession.text);
+    Except
+      showMessage( resultadoStr );
+    End;
   Finally
-     objResultado.Free;
+    objResultado.Free;
   End;
 end;
 

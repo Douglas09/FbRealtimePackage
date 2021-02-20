@@ -227,6 +227,10 @@ object Form2: TForm2
     object tbiCadastro: TTabSheet
       Caption = 'Cadastro'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 418
@@ -375,8 +379,8 @@ object Form2: TForm2
     end
   end
   object pnAutent: TPanel
-    Left = 614
-    Top = 42
+    Left = 670
+    Top = 337
     Width = 719
     Height = 394
     TabOrder = 1
@@ -687,9 +691,9 @@ object Form2: TForm2
     StoreDefs = True
     Left = 132
     Top = 40
-    object memContatosCODIGO: TIntegerField
-      DisplayWidth = 10
+    object memContatosCODIGO: TStringField
       FieldName = 'CODIGO'
+      Size = 10
     end
     object memContatosNOME: TStringField
       DisplayWidth = 38

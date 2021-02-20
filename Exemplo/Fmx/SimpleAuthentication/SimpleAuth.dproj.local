@@ -16,5 +16,6 @@
 	<ActiveMobileDevice>
 		<PIOS iOSSimulator="iPhone5"/>
 		<NoProfile iOSSimulator="iPhone5"/>
+		<PMacOSMojave iOSSimulator="iPhone5"/>
 	</ActiveMobileDevice>
 </BorlandProject>

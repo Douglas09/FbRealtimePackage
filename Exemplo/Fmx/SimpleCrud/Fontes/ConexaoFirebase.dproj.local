@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<ActiveMobileDevice>
-		<NoProfile iOSSimulator="iPhone5" Android=""/>
+		<NoProfile iOSSimulator="iPhone5" Android="" Android64=""/>
+		<PMacOSMojave iOSSimulator="iPhone5"/>
 	</ActiveMobileDevice>
 	<Transactions>
     <Transaction>2019/10/22 20:41:12.000.175,C:\freeLancer\FirebaseComponent\Firebase\Firebase.pas=</Transaction>

@@ -84,17 +84,14 @@ type
     procedure ExcluirClick(Sender: TObject);
     procedure VoltarListagemMouseEnter(Sender: TObject);
     procedure VoltarListagemMouseLeave(Sender: TObject);
-    procedure rtErrorOccurred(Sender: TComponent; Codigo: Integer;
-      Erro: string);
+    procedure rtErrorOccurred(Sender: TComponent; Codigo: Integer; Erro: string);
   private
     procedure aoEncerrarGravacaoDoContato(Senter : TOBject);
     procedure Aguarde_Mostrar(Mensagem : String);
     procedure Aguarde_Esconder;
   public
-    { Public declarations }
     FCodigo : String;
     FCaminhoFoto : String;
-
     mensagemAguarde : String;
     Procedimento : TProc;
 
@@ -115,14 +112,13 @@ function Base64ToStream(imagem: String): TMemoryStream;
 var Base64 : TBase64Encoding;
     bytes : tBytes;
 begin
+  Base64 := TBase64Encoding.Create;
   Try
-    Base64 := TBase64Encoding.Create;
     bytes  := Base64.DecodeStringToBytes(imagem);
     result := TBytesStream.Create(bytes);
     result.Seek(0, 0);
   Finally
     Base64.Free;
-    Base64:=nil;
     SetLength(bytes, 0);
   End;
 end;
@@ -130,15 +126,16 @@ end;
 function Base64ToBitmap(imagem: String): TBitmap;
 Var sTream : TMemoryStream;
 begin
-  if (trim(imagem) <> '') then
-  begin
-     Try
-        sTream := Base64ToStream(imagem);
-        result := TBitmap.CreateFromStream(sTream);
-     Finally
-        sTream.DisposeOf;
-        sTream := nil;
-     End;
+  result := nil;
+  if (trim(imagem) = '') then
+    exit;
+
+  sTream := nil;
+  Try
+    sTream := Base64ToStream(imagem);
+    result := TBitmap.CreateFromStream(sTream);
+  Finally
+    sTream.DisposeOf;
   end;
 end;
 
@@ -162,22 +159,19 @@ procedure TFrm_Principal.BtnConfirmarClick(Sender: TObject);
 begin
   Procedimento := procedure
   begin
-      if (FCodigo = '-1') then
-      begin
-         FCodigo := rt.Collection('CONTATOS').getLastRecord( 'codigo' );
-         FCodigo := intToStr(strToInt(FCodigo) + 1);
-      end;
+    if (FCodigo = '-1') then
+      FCodigo := rt.Collection('CONTATOS').getNextRecord('CODIGO');
 
-      rt.Collection('CONTATOS')
-          .Key(FCodigo)
-          .Field('CODIGO', FCodigo)
-          .Field('NOME', Edt_Nome.Text)
-          .Field('EMAIL', Edt_EmailCadastro.Text)
-          .Field('TELEFONE', Edt_Telefone.Text)
-          .Add;
+    rt.Collection('CONTATOS')
+      .Key(FCodigo)
+      .Field('CODIGO', FCodigo)
+      .Field('NOME', Edt_Nome.Text)
+      .Field('EMAIL', Edt_EmailCadastro.Text)
+      .Field('TELEFONE', Edt_Telefone.Text)
+      .Add;
 
-      if (FCaminhoFoto <> '') then
-         rt.Collection('ARQUIVOS/CONTATOS').Key( FCodigo ).FieldFile('FOTO_PERFIL', FCaminhoFoto).Add;
+    if (FCaminhoFoto <> '') then
+      rt.Collection('ARQUIVOS/CONTATOS').Key( FCodigo ).FieldFile('FOTO_PERFIL', FCaminhoFoto).Add;
   end;
   mensagemAguarde := 'Registrando contato...';
   ThreadExecute(aoEncerrarGravacaoDoContato);
@@ -212,54 +206,58 @@ procedure TFrm_Principal.FotoClick(Sender: TObject);
 begin
   if (AbreFoto.Execute) then
   begin
-     if (AbreFoto.FileName <> '') then
-     begin
-        FCaminhoFoto := AbreFoto.FileName;
-        Foto.Fill.Bitmap.Bitmap.LoadFromFile(FCaminhoFoto);
-     end;
+    if (AbreFoto.FileName = '') then
+      exit;
+
+    FCaminhoFoto := AbreFoto.FileName;
+    Foto.Fill.Bitmap.Bitmap.LoadFromFile(FCaminhoFoto);
   end;
 end;
 
 procedure TFrm_Principal.listarContatos;
 begin
   Procedimento := procedure
-       Var ItemAdd : TListViewItem;
-           rtr : TFBRealTimeResponse;
-       begin
-          Try
-             TThread.Synchronize(nil, procedure
-                    begin
-                       LV_Contatos.Items.Clear;
-                    end);
+    Var ItemAdd : TListViewItem;
+        rtr : TFBRealTimeResponse;
+    begin
+      rtr := nil;
+      Try
+        TThread.Synchronize(nil, procedure
+          begin
+            LV_Contatos.Items.Clear;
+          end);
 
-             rtr := rt.Collection('CONTATOS').Key('').Get;
-             if (rt.LoadItemsWithJson( rtr.toJson )) then
-             begin
-                TThread.Synchronize(nil, procedure
-                    begin
-                       LV_Contatos.BeginUpdate;
-                    end);
 
-                while not (rt.Items.Eof) do
-                begin
-                   ItemAdd := LV_Contatos.Items.Add;
-                   ItemAdd.Data['prCodigo'] := rt.Items.getField('CODIGO');
-                   ItemAdd.Data['prNome']   := rt.Items.getField('NOME');
+        rtr := rt.Collection('CONTATOS').Key('').Get;
+        if (rt.LoadItemsWithJson( rtr.toJson )) then
+        begin
+          TThread.Synchronize(nil, procedure
+            begin
+              LV_Contatos.BeginUpdate;
+            end);
 
-                   rt.Items.Next;
-                end;
-             end;
+          while not (rt.Items.Eof) do
+          begin
+            ItemAdd := LV_Contatos.Items.Add;
+            ItemAdd.Data['prCodigo'] := rt.Items.getField('CODIGO');
+            ItemAdd.Data['prNome']   := rt.Items.getField('NOME');
 
-             TThread.Synchronize(nil, procedure
-                 begin
-                   LV_Contatos.EndUpdate;
-                 end);
-
-          Finally
-             rtr.DisposeOf;
-             rtr := nil;
+            rt.Items.Next;
           end;
-       end;
+
+          TThread.Synchronize(nil, procedure
+            begin
+              LV_Contatos.EndUpdate;
+            end);
+        end;
+      Finally
+        {$IFDEF MSWINDOWS}
+          rtr.Free;
+        {$ELSE}
+          rtr.Destroy;
+        {$ENDIF}
+      end;
+    end;
   mensagemAguarde := 'Buscando contatos...';
   ThreadExecute(nil);
 end;
@@ -270,36 +268,40 @@ begin
    Var rtr : TFBRealTimeResponse;
        codigo : String;
    begin
-       Try
-         codigo := LV_Contatos.Items[ItemIndex].Data['prCodigo'].ToString;
-         rtr := rt.Collection('CONTATOS').Key( codigo ).Get;
+     rtr := nil;
+     Try
+       codigo := LV_Contatos.Items[ItemIndex].Data['prCodigo'].ToString;
+       rtr := rt.Collection('CONTATOS').Key( codigo ).Get;
 
-         if (rt.LoadItemsWithJson( rtr.toJson )) then
-         begin
-            FCodigo                := codigo;
-            Edt_EmailCadastro.Text := rt.Items.getField('email');
-            Edt_Nome.Text          := rt.Items.getField('nome');
-            Edt_Telefone.Text      := rt.Items.getField('telefone');
+       if (rt.LoadItemsWithJson( rtr.toJson )) then
+       begin
+         FCodigo                := codigo;
+         Edt_EmailCadastro.Text := rt.Items.getField('email');
+         Edt_Nome.Text          := rt.Items.getField('nome');
+         Edt_Telefone.Text      := rt.Items.getField('telefone');
 
-            rtr := rt.Collection('ARQUIVOS/CONTATOS').Key( FCodigo ).Get;
-            if (rt.LoadItemsWithJson(rtr.toJson)) then
-               Foto.Fill.Bitmap.Bitmap := Base64ToBitmap( rt.Items.getFileField('FOTO_PERFIL') )
-            else
-               Foto.Fill.Bitmap.Bitmap := FotoDefault.Bitmap;
+         rtr := rt.Collection('ARQUIVOS/CONTATOS').Key( FCodigo ).Get;
+         if (rt.LoadItemsWithJson(rtr.toJson)) then
+           Foto.Fill.Bitmap.Bitmap := Base64ToBitmap( rt.Items.getFileField('FOTO_PERFIL') )
+         else
+           Foto.Fill.Bitmap.Bitmap := FotoDefault.Bitmap;
 
-            TThread.Queue(nil, procedure
-                    begin
-                        Excluir.Visible        := true;
-                        Goto_TabCadastro.ExecuteTarget(Self);
-                    end);
-         end else begin
-            TThread.Queue(nil, procedure begin showMessage('Desculpe, nenhum contato encontrado com o código: '+ codigo); end);
-            listarContatos;
-         end;
-       Finally
-         rtr.DisposeOf;
-         rtr := nil;
+         TThread.Queue(nil, procedure
+           begin
+             Excluir.Visible        := true;
+             Goto_TabCadastro.ExecuteTarget(Self);
+           end);
+       end else begin
+         TThread.Queue(nil, procedure begin showMessage('Desculpe, nenhum contato encontrado com o código: '+ codigo); end);
+         listarContatos;
        end;
+     Finally
+       {$IFDEF MSWINDOWS}
+         rtr.Free;
+       {$ELSE}
+         rtr.Destroy;
+       {$ENDIF}
+     end;
    end;
    mensagemAguarde := 'Buscando registro...';
    ThreadExecute(nil);
@@ -322,35 +324,35 @@ end;
 procedure TFrm_Principal.rtErrorOccurred(Sender: TComponent; Codigo: Integer; Erro: string);
 begin
   TThread.Queue(nil, procedure
-          begin
-             showMessage('Firebase gerou uma mensagem: '+ Erro);
-          end);
+    begin
+      showMessage('Firebase gerou uma mensagem: '+ Erro);
+    end);
 end;
 
 procedure TFrm_Principal.ThreadExecute(onFinished : TNotifyEvent);
 Var thr : TThread;
 begin
-  if (assigned(Procedimento)) then
-  begin
-     thr := TThread.CreateAnonymousThread(procedure
-         begin
-            thr.Queue(nil, procedure
-                begin
-                    Aguarde_Mostrar( self.mensagemAguarde );
-                end);
+  if not (assigned(Procedimento)) then
+    exit;
 
-            if (assigned(procedimento)) then
-               procedimento;
+  thr := TThread.CreateAnonymousThread(procedure
+    begin
+      thr.Queue(nil, procedure
+        begin
+          Aguarde_Mostrar( self.mensagemAguarde );
+        end);
 
-            thr.Queue(nil, procedure
-                begin
-                    Aguarde_Esconder;
-                end);
-         end);
-     thr.FreeOnTerminate := true;
-     thr.OnTerminate     := onFinished;
-     thr.Start;
-  end;
+      if (assigned(procedimento)) then
+        procedimento;
+
+      thr.Queue(nil, procedure
+        begin
+          Aguarde_Esconder;
+        end);
+    end);
+  thr.FreeOnTerminate := true;
+  thr.OnTerminate     := onFinished;
+  thr.Start;
 end;
 
 procedure TFrm_Principal.VoltarCadastroClick(Sender: TObject);
@@ -367,13 +369,13 @@ end;
 procedure TFrm_Principal.VoltarListagemMouseEnter(Sender: TObject);
 begin
   if (Sender is TCircle) then
-     TCircle(Sender).Opacity := 0.5;
+    TCircle(Sender).Opacity := 0.5;
 end;
 
 procedure TFrm_Principal.VoltarListagemMouseLeave(Sender: TObject);
 begin
   if (Sender is TCircle) then
-     TCircle(Sender).Opacity := 1;
+    TCircle(Sender).Opacity := 1;
 end;
 
 end.
