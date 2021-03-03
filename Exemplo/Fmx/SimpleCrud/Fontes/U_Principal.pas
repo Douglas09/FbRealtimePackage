@@ -118,7 +118,7 @@ begin
     result := TBytesStream.Create(bytes);
     result.Seek(0, 0);
   Finally
-    Base64.Free;
+    FreeAndNil(Base64);
     SetLength(bytes, 0);
   End;
 end;
@@ -227,7 +227,6 @@ begin
             LV_Contatos.Items.Clear;
           end);
 
-
         rtr := rt.Collection('CONTATOS').Key('').Get;
         if (rt.LoadItemsWithJson( rtr.toJson )) then
         begin
@@ -252,9 +251,9 @@ begin
         end;
       Finally
         {$IFDEF MSWINDOWS}
-          rtr.Free;
+          FreeAndNil(rtr);
         {$ELSE}
-          rtr.Destroy;
+          rtr.DisposeOf;
         {$ENDIF}
       end;
     end;
@@ -291,15 +290,17 @@ begin
              Excluir.Visible        := true;
              Goto_TabCadastro.ExecuteTarget(Self);
            end);
-       end else begin
+       end
+       else
+       begin
          TThread.Queue(nil, procedure begin showMessage('Desculpe, nenhum contato encontrado com o código: '+ codigo); end);
          listarContatos;
        end;
      Finally
        {$IFDEF MSWINDOWS}
-         rtr.Free;
+         FreeAndNil(rtr);
        {$ELSE}
-         rtr.Destroy;
+         rtr.DisposeOf;
        {$ENDIF}
      end;
    end;
